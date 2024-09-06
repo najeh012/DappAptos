@@ -1,0 +1,16 @@
+---
+profiles:
+  default:
+    network: Testnet
+    private_key: "0xb91116f65215f7f2628187dc535b111f6154e670a5656090c4e12eec6c62c1d0"
+    public_key: "0x245fbd544edffebf00c126b4d137d10274a29ee04ec36c4f634175cc9a4b39f1"
+    account: e3ca9d16389abea14e46e7022010d9f0d03843377c5c53f26616be07fb161bb8
+    rest_url: "https://fullnode.testnet.aptoslabs.com"
+    faucet_url: "https://faucet.testnet.aptoslabs.com"
+  najeh:
+    network: Testnet
+    private_key: "0x77ac57b348eb27ac30e8fb75facb1a96c13b3dd9e9475ea3bb8e36594c1bf62f"
+    public_key: "0x87bda5e991a9aebdb5f9626fa732036ec0ea79fd87a7261be3e46ee6579b2697"
+    account: 2ffd39e15b906d6c380046402d09de4a415e6e063fb03cb72ec16d2a030cec86
+    rest_url: "https://fullnode.testnet.aptoslabs.com"
+    faucet_url: "https://faucet.testnet.aptoslabs.com"
