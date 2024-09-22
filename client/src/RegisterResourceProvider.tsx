@@ -15,7 +15,7 @@ const { TextArea } = Input;
 const { Option } = Select;
 
 // change this to be your module account address
-export const moduleAddress = "0x2ffd39e15b906d6c380046402d09de4a415e6e063fb03cb72ec16d2a030cec86";
+export const moduleAddress = "0x17130358f40d3c2176e91fb65dd6c932ffda2446a8c9025548ce24a99386775d";
 
 
 const config = new AptosConfig({ network: Network.TESTNET });
@@ -32,42 +32,7 @@ const ShareResources: React.FC = () => {
   const [transactionInProgress, setTransactionInProgress] = useState(false);
   
 
-   // Automatically execute transaction0 when the component mounts
-   useEffect(() => {
-    const initializeProviders = async () => {
-      if (!account) {
-        console.error("No connected wallet account.");
-        message.error('No connected wallet account.');
-        return;
-      }
-
-      const transaction0: InputTransactionData = {
-        data: {
-          function: `${moduleAddress}::TrusTrain::initialize_providers`,
-          functionArguments: []
-        }
-      };
-
-      setTransactionInProgress(true);
-
-      try {
-        // Sign and submit transaction to chain
-        const response0 = await signAndSubmitTransaction(transaction0);
-        // Wait for transaction
-        await aptos.waitForTransaction({ transactionHash: response0.hash });
-
-        message.success("Providers initialized successfully.");
-      } catch (error: any) {
-        console.error(error);
-        message.error("Failed to initialize providers.");
-      } finally {
-        setTransactionInProgress(false);
-      }
-    };
-
-    // Call the initializeProviders function when the component mounts
-    initializeProviders();
-  }, [account, signAndSubmitTransaction]);
+  
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
     if (!account) {

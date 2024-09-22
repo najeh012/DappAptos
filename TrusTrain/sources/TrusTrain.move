@@ -1,5 +1,5 @@
 module TrusTrain::TrusTrain {
-    
+    use aptos_framework::account;
     use std::signer;
     use aptos_framework::resource_account;
     use aptos_framework::coin;
@@ -7,13 +7,22 @@ module TrusTrain::TrusTrain {
     use aptos_framework::aptos_coin::AptosCoin;
     use std::option::Option;
     use std::vector::{Self as Vector, empty, push_back};
-
+    use std::debug;
+    use aptos_std::simple_map::{Self, SimpleMap};
     // Errors
+    const E_ALREADY_INITIALIZED: u64=5;
     const E_NOT_INITIALIZED: u64 = 1;
     const E_RESOURCE_NOT_ENOUGH: u64 = 2;
     const E_INVALID_RESOURCE: u64=3;
-   
-    const RESOURCE_ACCOUNT_ADDR: address = @0x46982b8c28283f7d1a02e6f5b979a5df7eba588417ea809f97620dcb87f6991b;
+    const E_RESOURCE_PROVIDERS_NOT_FOUND: u64 = 404;
+    const E_RESOURCE_ACCOUNT_NOT_FOUND: u64 = 0x1001;
+    const RESOURCE_ACCOUNT_ADDR: address = @0x051d3c432763dc1ec311c17fbfc206c023fdbdc1cacfb1195d9c02d206462b95;
+    const REGISTRY_ACCOUNT: address = @0x7bd9bb2504dc088c5d48161a860339e155be05208164888eca2f845a36a51e50;
+    struct MyResourceAccount has key {
+        signer_cap: account::SignerCapability,
+    }
+    
+
     struct ResourceProvider has key, copy,drop, store {
         address: address,
         cpu: u64,
@@ -42,48 +51,90 @@ module TrusTrain::TrusTrain {
         providers: vector<ResourceProvider>,
     }
 
-    // Initialize the ResourceProviders globally at the fixed address (RESOURCE_ACCOUNT_ADDR)
-    public entry fun initialize_providers(signer: &signer) {
+     fun init_module(resource_account: &signer) {
+        // Retrieve the SignerCapability for the resource account
+        let signer_cap = resource_account::retrieve_resource_account_cap(resource_account, @0xe3ca9d16389abea14e46e7022010d9f0d03843377c5c53f26616be07fb161bb8);
+    
+        // Store the SignerCapability within `ModuleData`
+        move_to(resource_account, MyResourceAccount {
+            signer_cap,
+        });
+
+            // Initialize the ResourceProviders struct
         let providers = ResourceProviders {
             providers: Vector::empty(),
         };
 
-        // Use the specified address to move the ResourceProviders
-        move_to<ResourceProviders>(signer, providers);
+        // Move the ResourceProviders struct to the resource account's storage
+        move_to(resource_account, providers);
     }
+   
+  
+     
+    public entry fun initialize_providers(signer: &signer) acquires MyResourceAccount{
+    debug::print(&std::string::utf8(b"Initializing providers for resource account: "));
+
+    // Retrieve the SignerCapability for the resource account
+    let my_account = borrow_global<MyResourceAccount>(signer::address_of(signer));
+    // Create a signer for the resource account using the SignerCapability
+    let resource_signer = account::create_signer_with_capability(&my_account.signer_cap);
+     debug::print(&resource_signer);
+    // Debug step 3: Check if ResourceProviders already exists
+    assert!(!exists<ResourceProviders>(@0xe3ca9d16389abea14e46e7022010d9f0d03843377c5c53f26616be07fb161bb8), E_ALREADY_INITIALIZED);
+    // Initialize the ResourceProviders struct
+    let providers = ResourceProviders {
+        providers: Vector::empty(),
+    };
+    move_to(&resource_signer, providers);  // Try to move ResourceProviders to the resource account
+}
 
 
 
-    public entry fun register_resources(
-        account: &signer,
-        cpu: u64,
-        gpu: u64,
-        is_external: bool,
-    ) acquires ResourceProviders {
-        // Validate input resources (e.g., ensure non-negative values)
-        assert!(cpu > 0, E_INVALID_RESOURCE);
-        assert!(gpu > 0, E_INVALID_RESOURCE);
+    // Public function to register resources
+public entry fun register_resources(
+    account: &signer,
+    cpu: u64,
+    gpu: u64,
+    is_external: bool,
+) acquires ResourceProviders, MyResourceAccount {
+    // Validate input resources (e.g., ensure non-negative values)
+    assert!(cpu > 0, E_INVALID_RESOURCE);
+    assert!(gpu > 0, E_INVALID_RESOURCE);
 
-        // Create a new ResourceProvider struct
-        let provider = ResourceProvider {
-            address: signer::address_of(account),
-            cpu: cpu,
-            gpu: gpu,
-            is_external: is_external,
-        };
+    // Create a new provider object
+    let provider = ResourceProvider {
+        address: signer::address_of(account),
+        cpu: cpu,
+        gpu: gpu,
+        is_external: is_external,
+    };
 
-         // Use the derived address of the resource account to access the global ResourceProviders
-    
-        let providers = borrow_global_mut<ResourceProviders>(RESOURCE_ACCOUNT_ADDR);
+    // Borrow the resource account's SignerCapability from MyResourceAccount
+    let resource_account = borrow_global<MyResourceAccount>(@0xe3ca9d16389abea14e46e7022010d9f0d03843377c5c53f26616be07fb161bb8);
+    let resource_signer = account::create_signer_with_capability(&resource_account.signer_cap);
 
-        // Add the new provider to the list of providers
-        push_back(&mut providers.providers, provider);
+    // Check if ResourceProviders exists in the resource account
+    if (!exists<ResourceProviders>(@0xe3ca9d16389abea14e46e7022010d9f0d03843377c5c53f26616be07fb161bb8)) {
+        // Initialize a new ResourceProviders struct and add the provider
+        let providers = Vector::empty<ResourceProvider>();
+        Vector::push_back(&mut providers, provider);
+        move_to(&resource_signer, ResourceProviders { providers });
+    } else {
+        // If it exists, borrow a mutable reference and add the provider
+        let providers_ref = borrow_global_mut<ResourceProviders>(@0xe3ca9d16389abea14e46e7022010d9f0d03843377c5c53f26616be07fb161bb8);
+        Vector::push_back(&mut providers_ref.providers, provider);
     }
+}
+
 
     public fun get_all_registered_resources(): vector<ResourceProvider> acquires ResourceProviders {
-       
-        let providers = borrow_global<ResourceProviders>(RESOURCE_ACCOUNT_ADDR); 
-        providers.providers
+       let registry_account = REGISTRY_ACCOUNT;
+        if (exists<ResourceProviders>(registry_account)) {
+            let providers = borrow_global<ResourceProviders>(registry_account);
+            providers.providers
+        } else {
+            Vector::empty<ResourceProvider>()
+        }
     }
 
     public fun allocate_resource(

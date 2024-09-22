@@ -7,10 +7,38 @@ profiles:
     account: e3ca9d16389abea14e46e7022010d9f0d03843377c5c53f26616be07fb161bb8
     rest_url: "https://fullnode.testnet.aptoslabs.com"
     faucet_url: "https://faucet.testnet.aptoslabs.com"
+  nagi:
+    network: Testnet
+    private_key: "0xe876e9061abe41e3113ab44d80d5ee9f7ae82f5d61ac9ae1506bf8608b84cd4b"
+    public_key: "0x3e992c9049d7367e6e47c33dfc4f25db45f9f8852122bc1838cdc3610a1daed2"
+    account: 7bd9bb2504dc088c5d48161a860339e155be05208164888eca2f845a36a51e50
+    rest_url: "https://fullnode.testnet.aptoslabs.com"
+    faucet_url: "https://faucet.testnet.aptoslabs.com"
+  nagneg:
+    network: Testnet
+    private_key: "0x33ecd366a1539ea390466d87b181d735e7ec161292076c04e64c170c50b57c5b"
+    public_key: "0x6ff81b90d28609272c560850a6c150fd689a3feb5b221d44bf63d304494e473a"
+    account: 46982b8c28283f7d1a02e6f5b979a5df7eba588417ea809f97620dcb87f6991b
+    rest_url: "https://fullnode.testnet.aptoslabs.com"
+    faucet_url: "https://faucet.testnet.aptoslabs.com"
   najeh:
     network: Testnet
     private_key: "0x77ac57b348eb27ac30e8fb75facb1a96c13b3dd9e9475ea3bb8e36594c1bf62f"
     public_key: "0x87bda5e991a9aebdb5f9626fa732036ec0ea79fd87a7261be3e46ee6579b2697"
     account: 2ffd39e15b906d6c380046402d09de4a415e6e063fb03cb72ec16d2a030cec86
+    rest_url: "https://fullnode.testnet.aptoslabs.com"
+    faucet_url: "https://faucet.testnet.aptoslabs.com"
+  trustrain:
+    network: Testnet
+    private_key: "0x26f63dac0cdef8084278d3a8b82d0e3117eb7079629a0aef1b99bab2165c4a95"
+    public_key: "0x12c06c00605128b2561be3214c7199718a20a08e2145fbea8b1f661083569990"
+    account: f962930f4f3ff950bbee2b3e915387e599326f1fb24de83f006c9c6c84e90f35
+    rest_url: "https://fullnode.testnet.aptoslabs.com"
+    faucet_url: "https://faucet.testnet.aptoslabs.com"
+  trustrain1:
+    network: Testnet
+    private_key: "0x2a69f51c88e1b8ae748fe28e69393ca0b6109a51bb35f93f29f6b91bacefa096"
+    public_key: "0xbbf9f8fa578708b548e53e47f09c2b4aed68871f1c24bf6e2f8040bfa3190ba1"
+    account: a30533e1b5d9893a3ede0e01dfc1edd64db0c204ad4b25b7ced507cef5e7f4c8
     rest_url: "https://fullnode.testnet.aptoslabs.com"
     faucet_url: "https://faucet.testnet.aptoslabs.com"
