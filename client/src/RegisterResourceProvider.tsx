@@ -15,7 +15,7 @@ const { TextArea } = Input;
 const { Option } = Select;
 
 // change this to be your module account address
-export const moduleAddress = "0x17130358f40d3c2176e91fb65dd6c932ffda2446a8c9025548ce24a99386775d";
+export const moduleAddress = "0xba910884da53913141fdfa5402d9eb75ef3822183be3c38611e0f732b13ec3e3";
 
 
 const config = new AptosConfig({ network: Network.TESTNET });

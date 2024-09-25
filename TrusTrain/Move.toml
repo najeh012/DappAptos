@@ -7,6 +7,6 @@ AptosFramework = { local = "C:/Users/LENOVO/Desktop/aptos-core-main/aptos-move/f
 
 
 [addresses]
-TrusTrain="0x17130358f40d3c2176e91fb65dd6c932ffda2446a8c9025548ce24a99386775d"
+TrusTrain="0xba910884da53913141fdfa5402d9eb75ef3822183be3c38611e0f732b13ec3e3"
 aptos_framework = "0x1"
 move_stdlib = "0x1"

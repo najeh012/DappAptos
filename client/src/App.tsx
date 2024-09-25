@@ -10,6 +10,7 @@ import AllocateResource from './AllocateResource';
 import LandingPage from './LandingPage';
 import AboutUs from './aboutUs';
 import Experts from './Experts';
+import HandleRequests from './HandleRequests';
 const { Header, Content, Footer } = Layout;
 
 const App: React.FC = () => {
@@ -45,6 +46,9 @@ const App: React.FC = () => {
                 </Menu.Item>
                 <Menu.Item key="allocate">
                   <Link to="/allocate">Allocate here</Link>
+                </Menu.Item>
+                <Menu.Item key="handlerequests">
+                  <Link to="/handlerequests">Train From Here</Link>
                 </Menu.Item>
                 <Menu.Item key="about">
                   <Link to="/about">About</Link>
@@ -82,6 +86,9 @@ const App: React.FC = () => {
             <Menu.Item key="allocate">
               <Link to="/allocate">Allocate here</Link>
             </Menu.Item>
+            <Menu.Item key="handlerequests">
+                  <Link to="/handlerequests">Train From Here</Link>
+            </Menu.Item>
             <Menu.Item key="about">
               <Link to="/about">About</Link>
             </Menu.Item>
@@ -99,6 +106,7 @@ const App: React.FC = () => {
               <Route path="/allocate" element={<AllocateResource />} />
               <Route path="/about" element={<AboutUs/>} />
               <Route path="/team" element={<Experts/>} />
+              <Route path="/handlerequests" element={<HandleRequests/>} />
             </Routes>
           </div>
         </Content>
