@@ -11,6 +11,7 @@ import LandingPage from './LandingPage';
 import AboutUs from './aboutUs';
 import Experts from './Experts';
 import HandleRequests from './HandleRequests';
+import DatasetMarketplace from './datasetMarketplace';
 const { Header, Content, Footer } = Layout;
 
 const App: React.FC = () => {
@@ -49,6 +50,9 @@ const App: React.FC = () => {
                 </Menu.Item>
                 <Menu.Item key="handlerequests">
                   <Link to="/handlerequests">Train From Here</Link>
+                </Menu.Item>
+                <Menu.Item key="datasets">
+                  <Link to="/datasetMarketplace">Access datasets</Link>
                 </Menu.Item>
                 <Menu.Item key="about">
                   <Link to="/about">About</Link>
@@ -89,6 +93,9 @@ const App: React.FC = () => {
             <Menu.Item key="handlerequests">
                   <Link to="/handlerequests">Train From Here</Link>
             </Menu.Item>
+            <Menu.Item key="datasets">
+              <Link to="/datasetMarketplace">Access datasets</Link>
+            </Menu.Item>
             <Menu.Item key="about">
               <Link to="/about">About</Link>
             </Menu.Item>
@@ -107,6 +114,8 @@ const App: React.FC = () => {
               <Route path="/about" element={<AboutUs/>} />
               <Route path="/team" element={<Experts/>} />
               <Route path="/handlerequests" element={<HandleRequests/>} />
+              <Route path="/datasetMarketplace" element={<DatasetMarketplace/>} />
+
             </Routes>
           </div>
         </Content>

@@ -1,3 +1,5 @@
+
+
 module TrusTrain::TrusTrain {
     use aptos_framework::account;
     use std::signer;
@@ -8,8 +10,10 @@ module TrusTrain::TrusTrain {
     use std::option::Option;
     use std::vector::{Self as Vector, empty, push_back};
     use std::debug;
+    use std::string::String;
     use aptos_std::simple_map::{Self, SimpleMap};
     use aptos_framework::event;
+    use 0x13f383467f9e0bbcd3d9df7ebc720d9273a2a64b97f1de00ca293f7eb0f03344::FLCoinv2::FLC;
     // Errors
     const E_NOT_FOUND: u64 =12121;
     const E_ALREADY_INITIALIZED: u64=5;
@@ -19,9 +23,9 @@ module TrusTrain::TrusTrain {
     const E_RESOURCE_PROVIDERS_NOT_FOUND: u64 = 404;
     const E_RESOURCE_ACCOUNT_NOT_FOUND: u64 = 0x1001;
     const E_NO_PENDING_REQUESTS_FOR_PROVIDER: u64 = 101;
-
-    const RESOURCE_ACCOUNT_ADDR: address = @0xba910884da53913141fdfa5402d9eb75ef3822183be3c38611e0f732b13ec3e3;
-    const REGISTRY_ACCOUNT: address = @0x7bd9bb2504dc088c5d48161a860339e155be05208164888eca2f845a36a51e50;
+    // Consts
+    const RESOURCE_ACCOUNT_ADDR: address = @0xa510692ad98680b398e472cf40b71b3b46b771b44cdf59eda99707e18db78784;
+    const TrusTrain_addr: address=@0x13f383467f9e0bbcd3d9df7ebc720d9273a2a64b97f1de00ca293f7eb0f03344;
     struct MyResourceAccount has key {
         signer_cap: account::SignerCapability,
     }
@@ -29,8 +33,11 @@ module TrusTrain::TrusTrain {
 
     struct ResourceProvider has key, copy,drop, store {
         address: address,
-        cpu: u64,
-        gpu: u64,
+        cpu: vector<u8>,
+        gpu: vector<u8>,
+        storage: u64,
+        storage_description: vector<u8>,
+        ram: u64,
         is_external: bool,
     }
 
@@ -50,6 +57,18 @@ module TrusTrain::TrusTrain {
         trainer_address: address,    // Address of the model trainer
         weights_ipfs_link: vector<u8> // IPFS link to the trained model weights
     }
+
+    struct DatasetInfo has key , store, copy ,drop {
+        provider_address: address,
+        description: vector<u8>,
+        ipfs_link: vector<u8>,
+        free: bool,             
+        price: u64, 
+    }
+    struct DatasetsInfo has key {
+        datasets : vector<DatasetInfo>,
+    }
+
     // Define an event for accepted requests
     #[event]
     struct TrainingAcceptedEvent has  drop,store {
@@ -100,7 +119,11 @@ module TrusTrain::TrusTrain {
         move_to(resource_account, providers);
         move_to(resource_account,  TrainingRequests {
         requests: Vector::empty(),
-    });
+        });
+
+        move_to(resource_account,  DatasetsInfo {
+        datasets: Vector::empty(),
+        });
 
     
     }
@@ -110,19 +133,28 @@ module TrusTrain::TrusTrain {
     // Public function to register resources
 public entry fun register_resources(
     account: &signer,
-    cpu: u64,
-    gpu: u64,
+    cpu: vector<u8>,
+    gpu: vector<u8>,
+    storage: u64,
+    storage_description: vector<u8>,
+    ram: u64,
     is_external: bool,
 ) acquires ResourceProviders, MyResourceAccount {
     // Validate input resources (e.g., ensure non-negative values)
-    assert!(cpu > 0, E_INVALID_RESOURCE);
-    assert!(gpu > 0, E_INVALID_RESOURCE);
+    assert!(!Vector::is_empty(&cpu), E_INVALID_RESOURCE);
+    assert!(!Vector::is_empty(&gpu), E_INVALID_RESOURCE);
+    assert!(!Vector::is_empty(&storage_description), E_INVALID_RESOURCE);
+    assert!(ram > 0, E_INVALID_RESOURCE);
+    assert!(storage >0, E_INVALID_RESOURCE);
 
     // Create a new provider object
     let provider = ResourceProvider {
         address: signer::address_of(account),
         cpu: cpu,
         gpu: gpu,
+        storage: storage,
+        storage_description: storage_description,
+        ram: ram,
         is_external: is_external,
     };
 
@@ -235,57 +267,69 @@ public fun get_pending_requests_for_provider(provider: &signer): vector<Training
 
     filtered_requests
 }
+public entry  fun shareDataset(
+    account: &signer,
+    description: vector<u8>,
+    ipfs_link: vector<u8>,
+    free: bool,
+    price: u64
+) acquires DatasetsInfo, MyResourceAccount {
+    // Create the DatasetInfo struct with the provided description and IPFS link
+    let dataset_info = DatasetInfo {
+        provider_address: signer::address_of(account),
+        description: description,
+        ipfs_link: ipfs_link,
+        free: free,
+        price: price,
+    };
 
+    // Retrieve the resource account's SignerCapability from MyResourceAccount
+    let my_resource_account = borrow_global<MyResourceAccount>(RESOURCE_ACCOUNT_ADDR);
+    let resource_signer = account::create_signer_with_capability(&my_resource_account.signer_cap);
 
-   public fun get_all_registered_resources(): vector<ResourceProvider> acquires ResourceProviders {
-    // Define the resource account address
-    let resource_account_address = RESOURCE_ACCOUNT_ADDR;
-    
-    // Check if ResourceProviders exists at the resource account address
-    assert!(exists<ResourceProviders>(resource_account_address), E_NOT_FOUND);
+    // Check if the DatasetsInfo exists for the resource account
+    if (!exists<DatasetsInfo>(signer::address_of(&resource_signer))) {
+        // If it does not exist, create a new vector and add the dataset_info
+        let datasets = Vector::empty<DatasetInfo>();
+        Vector::push_back(&mut datasets, dataset_info);
+        // Store the new DatasetsInfo in the resource account's storage
+        move_to(&resource_signer, DatasetsInfo { datasets });
+    } else {
+        // If it exists, borrow a mutable reference to the datasets vector and add the dataset_info
+        let datasets_info = borrow_global_mut<DatasetsInfo>(signer::address_of(&resource_signer));
+        Vector::push_back(&mut datasets_info.datasets, dataset_info);
+    }
 
-    // Borrow a reference to the ResourceProviders resource
-    let providers_ref = borrow_global<ResourceProviders>(resource_account_address);
-
-    // Return the vector of registered resource providers
-    providers_ref.providers
 }
+// Access dataset function with FLC payment
+    public entry fun access_dataset(
+        buyer: &signer,
+        dataset_index: u64,
+        payment_amount: u64
+    ) acquires DatasetsInfo {
+        let buyer_address = signer::address_of(buyer);
 
+        // Ensure the dataset exists
+        let datasets_info = borrow_global<DatasetsInfo>(RESOURCE_ACCOUNT_ADDR);
+        assert!(dataset_index < Vector::length(&datasets_info.datasets), E_NOT_FOUND);
 
-    public fun allocate_resource(
-        account: &signer,
-        provider_address: address,
-        cpu: u64,
-        gpu: u64,
-        allocation_time: u64,
-        payment_amount: u64,
-    ) acquires ResourceProvider {
-        let provider = borrow_global_mut<ResourceProvider>(provider_address);
-        // Check if the provider has enough resources
-        assert!(provider.cpu >= cpu && provider.gpu >= gpu, E_RESOURCE_NOT_ENOUGH);
+        // Get dataset details
+        let dataset = Vector::borrow(&datasets_info.datasets, dataset_index);
 
-        // Subtract the allocated resources
-        provider.cpu = provider.cpu - cpu;
-        provider.gpu = provider.gpu - gpu;
+        // If the dataset is not free, check payment
+        if (!dataset.free) {
+            assert!(payment_amount >= dataset.price, E_RESOURCE_NOT_ENOUGH);
 
-        let allocation = Allocation {
-            cpu: cpu,
-            gpu: gpu,
-            model_trainer: signer::address_of(account),
-            resource_provider: provider_address,
-            allocation_time: allocation_time,
-            payment_amount: payment_amount,
-        };
-        move_to(account, allocation);
+            // Transfer payment from buyer to provider using FLCoin
+            coin::transfer<FLC>(
+                buyer, 
+                dataset.provider_address, 
+                payment_amount
+            );
+        }
+
+        // Access granted to the dataset (frontend handles IPFS link retrieval)
     }
 
-    public fun pay_resource_provider(
-        payer: &signer,
-        provider_address: address,
-        payment_amount: u64,
-    )  {
-        // Transfer the payment amount from the payer's account to the resource provider
-        coin::transfer<AptosCoin>(payer, provider_address, payment_amount);
-    }
 
 }

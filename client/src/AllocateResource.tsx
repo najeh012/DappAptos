@@ -6,15 +6,17 @@ import { InputTransactionData, useWallet } from "@aptos-labs/wallet-adapter-reac
 import './ShareResources.css';
 
 // Module account address
-export const moduleAddress = "0xba910884da53913141fdfa5402d9eb75ef3822183be3c38611e0f732b13ec3e3";
+export const moduleAddress = "0xa510692ad98680b398e472cf40b71b3b46b771b44cdf59eda99707e18db78784";
 const config = new AptosConfig({ network: Network.TESTNET });
 const aptos = new Aptos(config);
 
 // Define interfaces
 interface ResourceProvider {
   address: string;
-  cpu: number;
-  gpu: number;
+  cpu: string;
+  gpu: string;
+  ram: number; // Add this line
+  storage: number; // Add this line
   is_external: boolean;
 }
 
@@ -59,7 +61,16 @@ const ShareResources: React.FC = () => {
       message.error('Failed to fetch registered resources.');
     }
   };
+  const hexToString = (hex: string) => {
+    let str = '';
+    for (let i = 0; i < hex.length; i += 2) {
+      str += String.fromCharCode(parseInt(hex.substr(i, 2), 16));
+    }
+    return str;
+  };
 
+ 
+  
   // Function to submit a training request when a provider is selected
   const submitTrainingRequest = async () => {
     if (!account) {
@@ -120,21 +131,28 @@ const ShareResources: React.FC = () => {
                   className="resource-card"
                   onClick={() => showDrawer(provider.address)} // Handle click with selected provider
                 >
-                  <Descriptions title={`Provider ${index + 1}`} bordered column={1} size="small">
-                    <Descriptions.Item label="Address">{provider.address}</Descriptions.Item>
-                    <Descriptions.Item label="CPU">
-                      <DesktopOutlined style={{ color: '#52c41a', marginRight: 8 }} />
-                      {provider.cpu}
-                    </Descriptions.Item>
-                    <Descriptions.Item label="GPU">
-                      <HddOutlined style={{ color: '#1890ff', marginRight: 8 }} />
-                      {provider.gpu}
-                    </Descriptions.Item>
-                    <Descriptions.Item label="External">
-                      <CloudOutlined style={{ color: provider.is_external ? '#faad14' : '#bfbfbf', marginRight: 8 }} />
-                      {provider.is_external ? 'Yes' : 'No'}
-                    </Descriptions.Item>
-                  </Descriptions>
+                  
+                    <Descriptions title={`Provider ${index + 1}`} bordered column={1} size="small">
+                      <Descriptions.Item label="Address">{provider.address}</Descriptions.Item>
+                      <Descriptions.Item label="CPU">
+                        <DesktopOutlined style={{ color: '#52c41a', marginRight: 8 }} />
+                        {hexToString(provider.cpu)}
+                      </Descriptions.Item>
+                      <Descriptions.Item label="GPU">
+                        <HddOutlined style={{ color: '#1890ff', marginRight: 8 }} />
+                        {hexToString(provider.gpu)}
+                      </Descriptions.Item>
+                      <Descriptions.Item label="RAM (GB)">
+                        {provider.ram} 
+                      </Descriptions.Item>
+                      <Descriptions.Item label="Storage (GB)">
+                        {provider.storage} 
+                      </Descriptions.Item>
+                      <Descriptions.Item label="External">
+                        <CloudOutlined style={{ color: provider.is_external ? '#faad14' : '#bfbfbf', marginRight: 8 }} />
+                        {provider.is_external ? 'Yes' : 'No'}
+                      </Descriptions.Item>
+                    </Descriptions>
                 </Card>
               </Col>
             ))}
