@@ -1,4 +1,4 @@
-module TrusTrain::FLCoinv2{
+module TrusTrain_addr::FLCoinv2{
     use aptos_framework::coin;
     use std::string;
     use std::signer;
@@ -56,7 +56,16 @@ module TrusTrain::FLCoinv2{
     let burn_capabilities = &borrow_global<Capabilities<FLC>>(@TrusTrain_addr).burn_cap;
     coin::burn<FLC>(coins,burn_capabilities);
 }
+    public entry fun transfer(sender: &signer, receiver: address, amount: u64)  {
+        // Check if the sender has the Capabilities for FLCoinv2
+        assert!(exists<Capabilities<FLC>>(signer::address_of(sender)), E_NO_CAPABILITIES);
 
+        // Withdraw FLC coins from the sender's CoinStore
+        let coins_to_transfer = coin::withdraw<FLC>(sender, amount);
+
+        // Deposit the FLC coins into the receiver's CoinStore
+        coin::deposit(receiver, coins_to_transfer);
+    }
 
         
 }

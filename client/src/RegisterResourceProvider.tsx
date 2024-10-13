@@ -15,7 +15,8 @@ const { TextArea } = Input;
 const { Option } = Select;
 
 // change this to be your module account address
-export const moduleAddress = "0xa510692ad98680b398e472cf40b71b3b46b771b44cdf59eda99707e18db78784";
+export const moduleAddress = "0xcb2f626b41f47f250262619e734dcddfe66c59a7312548578b44a278def5921a";
+export const moduleAddress1 = "0x13f383467f9e0bbcd3d9df7ebc720d9273a2a64b97f1de00ca293f7eb0f03344";
 
 
 const config = new AptosConfig({ network: Network.TESTNET });
@@ -172,7 +173,7 @@ const[gpu, setGpu] = useState('');
 
     const transaction2: InputTransactionData = {
       data: {
-        function: `${moduleAddress}::TrusTrain::register_aptos_coin_store`, // Replace with your actual module and function
+        function: `${moduleAddress1}::FLCoinv2::register_coin`, // Replace with your actual module and function
         functionArguments: [
         ]
         // Add type arguments if your function requires them
@@ -299,14 +300,7 @@ const[gpu, setGpu] = useState('');
     </Form>
       </Card>
 
-      <input
-        type="text"
-        value={receiverAddress}
-        onChange={(e) => setReceiverAddress(e.target.value)} // Add this line to capture the receiver address input
-        placeholder="Receiver Address"
-      />
-      
-      <button onClick={sendAptos} disabled={transactionInProgress}>Send 1 APT</button>
+    
 
      
       

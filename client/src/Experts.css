@@ -1,67 +1,75 @@
 body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-  }
-  
-  .experts {
-    height: 100%;
-    margin: 50px auto;
-    padding: 20px;
-    color: white;
-    background-color: #1c1f4a;
-    border-radius: 8px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    text-align: center;
-  }
-  
-  .experts h1 {
-    font-size: 2.5em;
-    margin-bottom: 20px;
-  }
-  
-  .experts h1 span {
-    color: #00c4cc;
-  }
-  
-  .experts-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-  }
-  
-  .expert-card {
-    width: 250px;
-    background-color: #062743;
-    border-radius: 8px;
-    padding: 20px;
-    text-align: center;
-  }
-  
-  .expert-image img {
-    width: 100px;
-    height: 100px;
-    border-radius: 50%;
-  }
-  
-  .expert-card h2 {
-    font-size: 1.5em;
-    margin: 10px 0;
-  }
-  
-  .expert-card p {
-    font-size: 1em;
-    margin: 10px 0;
-  }
-  
-  .expert-card a img {
-    width: 24px;
-    height: 24px;
-    margin-top: 10px;
-    transition: transform 0.3s;
-  }
-  
-  .expert-card a img:hover {
-    transform: scale(1.2);
-  }
-  
+  margin: 0;
+  font-family: Arial, sans-serif;
+}
+
+.experts {
+  margin: 50px auto;
+  padding: 40px 20px;
+  color: white;
+  background-color: #1c1f4a;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+.experts h1 {
+  font-size: 2.5em;
+  margin-bottom: 40px;
+}
+
+.experts h1 span {
+  color: #00c4cc;
+}
+
+.experts-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 40px; /* Increase the gap for breathing room */
+  justify-content: center;
+}
+
+.expert-card {
+  width: 250px;
+  background-color: #062743;
+  border-radius: 15px;
+  padding: 20px;
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.expert-card:hover {
+  transform: translateY(-10px); /* Move the card up on hover */
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2); /* Enhance shadow on hover */
+}
+
+.expert-image img {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-bottom: 15px; /* Add space below the image */
+  border: 3px solid #00c4cc; /* Add a border to make the image pop */
+}
+
+.expert-card h2 {
+  font-size: 1.4em;
+  margin: 15px 0 10px 0;
+}
+
+.expert-card p {
+  font-size: 1.1em;
+  margin: 10px 0 20px 0;
+  color: #cfd7e3;
+}
+
+.expert-card a img {
+  width: 24px;
+  height: 24px;
+  margin-top: 10px;
+  transition: transform 0.3s ease;
+}
+
+.expert-card a img:hover {
+  transform: scale(1.2); /* Slightly enlarge the LinkedIn icon on hover */
+}

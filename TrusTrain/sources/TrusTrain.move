@@ -13,7 +13,11 @@ module TrusTrain::TrusTrain {
     use std::string::String;
     use aptos_std::simple_map::{Self, SimpleMap};
     use aptos_framework::event;
+    //use TrusTrain::FLCoinv2;
+    //use TrusTrain::FLCoinv2::FLC;
+    use 0x13f383467f9e0bbcd3d9df7ebc720d9273a2a64b97f1de00ca293f7eb0f03344::FLCoinv2;
     use 0x13f383467f9e0bbcd3d9df7ebc720d9273a2a64b97f1de00ca293f7eb0f03344::FLCoinv2::FLC;
+    //use std::coin::CoinStore<0x13f383467f9e0bbcd3d9df7ebc720d9273a2a64b97f1de00ca293f7eb0f03344::FLCoinv2::FLC>
     // Errors
     const E_NOT_FOUND: u64 =12121;
     const E_ALREADY_INITIALIZED: u64=5;
@@ -24,7 +28,7 @@ module TrusTrain::TrusTrain {
     const E_RESOURCE_ACCOUNT_NOT_FOUND: u64 = 0x1001;
     const E_NO_PENDING_REQUESTS_FOR_PROVIDER: u64 = 101;
     // Consts
-    const RESOURCE_ACCOUNT_ADDR: address = @0xa510692ad98680b398e472cf40b71b3b46b771b44cdf59eda99707e18db78784;
+    const RESOURCE_ACCOUNT_ADDR: address = @0xcb2f626b41f47f250262619e734dcddfe66c59a7312548578b44a278def5921a;
     const TrusTrain_addr: address=@0x13f383467f9e0bbcd3d9df7ebc720d9273a2a64b97f1de00ca293f7eb0f03344;
     struct MyResourceAccount has key {
         signer_cap: account::SignerCapability,
@@ -308,7 +312,7 @@ public entry  fun shareDataset(
         payment_amount: u64
     ) acquires DatasetsInfo {
         let buyer_address = signer::address_of(buyer);
-
+        0x13f383467f9e0bbcd3d9df7ebc720d9273a2a64b97f1de00ca293f7eb0f03344::FLCoinv2::register_coin(buyer);
         // Ensure the dataset exists
         let datasets_info = borrow_global<DatasetsInfo>(RESOURCE_ACCOUNT_ADDR);
         assert!(dataset_index < Vector::length(&datasets_info.datasets), E_NOT_FOUND);

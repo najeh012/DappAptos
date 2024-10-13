@@ -1,5 +1,9 @@
 import React from 'react';
 import './Experts.css';
+import maherImage from './assets/maher.jpeg'; // Import the actual image
+import najehImage from './assets/najeh.jpg';  // Import the actual image
+import toutiImage from './assets/gg.png'; // Import your image
+import linkedinlogo from './assets/linkedinlogo.png' // LinkedIn icon
 
 interface Expert {
   id: number;
@@ -14,29 +18,29 @@ const experts: Expert[] = [
     id: 1,
     name: 'Maher Boughdiri',
     role: 'Project Lead | Blockchain & AI Researcher',
-    profileImage: './assets/maher.jpeg', // Replace with actual image URLs
+    profileImage: maherImage, // Use imported image
     linkedin: 'https://www.linkedin.com/in/maherboughdiri',
   },
   {
     id: 2,
     name: 'Nejeh Mansour',
-    role: 'Web3 Developer | Aptos Developer',
-    profileImage: './assets/najeh.jpg', // Replace with actual image URLs
+    role: 'Web3 Developer | AI Enthusiast',
+    profileImage: najehImage, // Use imported image
     linkedin: 'https://www.linkedin.com/in/nejehmansour',
   },
   {
     id: 3,
     name: 'Touti Wafa',
     role: 'Marketing Head',
-    profileImage: 'gg.png', // Replace with actual image URLs
+    profileImage: toutiImage, // Use imported image
     linkedin: 'https://www.linkedin.com/in/toutiwafa',
   },
   {
     id: 4,
-    name: 'Firas Aisoui',
-    role: 'IA Engineer | Federated Learning Specialist',
-    profileImage: 'https://via.placeholder.com/100', // Replace with actual image URLs
-    linkedin: 'https://www.linkedin.com/in/firasaisoui',
+    name: 'Mohamed Hkima',
+    role: 'BlockChain Engineer | Federated Learning Specialist',
+    profileImage: 'https://via.placeholder.com/100', // External placeholder
+    linkedin: 'https://www.linkedin.com/in/mohamed-hkima/',
   },
 ];
 
@@ -53,7 +57,7 @@ const Experts: React.FC = () => {
             <h2>{expert.name}</h2>
             <p>{expert.role}</p>
             <a href={expert.linkedin} target="_blank" rel="noopener noreferrer">
-              <img src="https://image.flaticon.com/icons/png/512/174/174857.png" alt="LinkedIn" />
+              <img src={linkedinlogo} alt="LinkedIn" /> {/* Use imported LinkedIn icon */}
             </a>
           </div>
         ))}

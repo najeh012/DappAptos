@@ -1,0 +1,16 @@
+---
+profiles:
+  default:
+    network: Testnet
+    private_key: "0x953ecd70d590892f85ffd444ce2e33eb27ba8187ee7c6d22c79ed51dae08db18"
+    public_key: "0x658b829c7b6e2464425b9c76ed7cc0468ee3d031b874a58f8a5b77f0384e7820"
+    account: 13f383467f9e0bbcd3d9df7ebc720d9273a2a64b97f1de00ca293f7eb0f03344
+    rest_url: "https://fullnode.testnet.aptoslabs.com"
+    faucet_url: "https://faucet.testnet.aptoslabs.com"
+  flcprofile:
+    network: Testnet
+    private_key: "0x78ca963e458165ab2b79aff100fdbc11e95e6d86e854dbdd852a1fa807d963a1"
+    public_key: "0x8163836771170b164905973330d876aac39ed1e95693cca7d4e5a0cd9e3e27f1"
+    account: cb8efaa603d1b7f0928b670ca4102b95c4d5c5a657e27da2195380d8f1868904
+    rest_url: "https://fullnode.testnet.aptoslabs.com"
+    faucet_url: "https://faucet.testnet.aptoslabs.com"

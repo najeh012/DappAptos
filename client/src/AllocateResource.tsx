@@ -6,7 +6,7 @@ import { InputTransactionData, useWallet } from "@aptos-labs/wallet-adapter-reac
 import './ShareResources.css';
 
 // Module account address
-export const moduleAddress = "0xa510692ad98680b398e472cf40b71b3b46b771b44cdf59eda99707e18db78784";
+export const moduleAddress = "0xcb2f626b41f47f250262619e734dcddfe66c59a7312548578b44a278def5921a";
 const config = new AptosConfig({ network: Network.TESTNET });
 const aptos = new Aptos(config);
 

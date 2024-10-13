@@ -1,0 +1,14 @@
+[package]
+name = "FLCoin"
+version = "1.0.0"
+authors = []
+
+
+
+[dependencies]
+AptosFramework = { local = "C:/Users/LENOVO/Desktop/aptos-core-main/aptos-move/framework/aptos-framework" , rev="testnet" }
+
+
+[addresses]
+TrusTrain_addr = "0x13f383467f9e0bbcd3d9df7ebc720d9273a2a64b97f1de00ca293f7eb0f03344"
+
