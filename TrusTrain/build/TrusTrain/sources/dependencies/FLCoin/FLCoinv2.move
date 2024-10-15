@@ -18,7 +18,7 @@ module TrusTrain_addr::FLCoinv2{
             account,
             string::utf8(b"FL Token"),
             string::utf8(b"FLC"),
-            100,
+            6,
             true,
         );
         assert!(signer::address_of(account)==@TrusTrain_addr,E_NO_ADMIN);

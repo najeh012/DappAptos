@@ -7,7 +7,7 @@ const AboutUs: React.FC = () => {
     <div className="about-us">
       <div className="about-header">
         <h1>About <span>Us</span></h1>
-        <p>A Web3 Platform for Collaborative and Decentralized AI Computation</p>
+        <p>A Web3 Platform for Collaborative and Decentralized AI Resource Sharing</p>
       </div>
       <div className="about-content">
         <div className="about-image">
@@ -16,7 +16,7 @@ const AboutUs: React.FC = () => {
         <div className="about-text">
           <h2>We Are Trustrain</h2>
           <p>
-            At TrustTrain, we harness the power of DePIN and blockchain technology to create a revolutionary AI training ecosystem. When you share your computing resources or datasets, you earn TrustTrain tokens as a reward. Our blockchain-based platform ensures secure, transparent, and efficient tracking of contributions and rewards.
+            At TrustTrain, we harness the power of DePIN and blockchain technology to create a revolutionary AI resource sharing ecosystem. When you share your computing resources or datasets, you earn TrustTrain tokens as a reward. Our blockchain-based platform ensures secure, transparent, and efficient tracking of contributions and rewards.
           </p>
           
         </div>

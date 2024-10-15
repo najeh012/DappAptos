@@ -23,7 +23,7 @@ body {
 }
 
 .res-logo {
-  width: 150px; /* Make the resource logo bigger */
+  width: 250px; /* Make the resource logo bigger */
   margin-right: 20px; /* Space between the two logos */
   animation: pulse 2s infinite; /* Animation for the resourcelogo */
 }

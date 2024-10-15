@@ -7,7 +7,7 @@ AptosFramework = { local = "C:/Users/LENOVO/Desktop/aptos-core-main/aptos-move/f
 FLCoin= {local = "C:/Users/LENOVO/Desktop/myfirstdapp/FLCoin" }
 
 [addresses]
-TrusTrain="0xcb2f626b41f47f250262619e734dcddfe66c59a7312548578b44a278def5921a"
+TrusTrain="0x5e813ba3119157037e064b59853879ed4f232e69f2e980c108e61b97b72ad96f"
 aptos_framework = "0x1"
 move_stdlib = "0x1"
 fladdress="0x13f383467f9e0bbcd3d9df7ebc720d9273a2a64b97f1de00ca293f7eb0f03344"

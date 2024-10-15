@@ -4,6 +4,7 @@ import maherImage from './assets/maher.jpeg'; // Import the actual image
 import najehImage from './assets/najeh.jpg';  // Import the actual image
 import toutiImage from './assets/gg.png'; // Import your image
 import linkedinlogo from './assets/linkedinlogo.png' // LinkedIn icon
+import mohamed from './assets/mohamed.jpeg'
 
 interface Expert {
   id: number;
@@ -26,7 +27,7 @@ const experts: Expert[] = [
     name: 'Nejeh Mansour',
     role: 'Web3 Developer | AI Enthusiast',
     profileImage: najehImage, // Use imported image
-    linkedin: 'https://www.linkedin.com/in/nejehmansour',
+    linkedin: 'www.linkedin.com/in/najeh-mansour-42b601265',
   },
   {
     id: 3,
@@ -39,7 +40,7 @@ const experts: Expert[] = [
     id: 4,
     name: 'Mohamed Hkima',
     role: 'BlockChain Engineer | Federated Learning Specialist',
-    profileImage: 'https://via.placeholder.com/100', // External placeholder
+    profileImage: mohamed, // External placeholder
     linkedin: 'https://www.linkedin.com/in/mohamed-hkima/',
   },
 ];
@@ -47,7 +48,7 @@ const experts: Expert[] = [
 const Experts: React.FC = () => {
   return (
     <div className="experts">
-      <h1>Our <span>Experts</span></h1>
+      <h1>Our <span>Team</span></h1>
       <div className="experts-container">
         {experts.map((expert) => (
           <div key={expert.id} className="expert-card">

@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { Card, message, List, Button, Descriptions, InputNumber, Modal } from 'antd';
 import { Aptos, AptosConfig, Network } from "@aptos-labs/ts-sdk";
-import { LinkOutlined } from '@ant-design/icons';
 import { InputTransactionData, useWallet } from "@aptos-labs/wallet-adapter-react";
+import { DeleteOutlined, LinkOutlined } from '@ant-design/icons';
 
 // Module account address
-export const moduleAddress = "0xcb2f626b41f47f250262619e734dcddfe66c59a7312548578b44a278def5921a";
+export const moduleAddress = "0x5e813ba3119157037e064b59853879ed4f232e69f2e980c108e61b97b72ad96f";
 
 const config = new AptosConfig({ network: Network.TESTNET });
 const aptos = new Aptos(config);
@@ -132,6 +132,34 @@ const DatasetMarketplace: React.FC = () => {
     }
   };
 
+  // Handle delete dataset
+  const handleDeleteDataset = async (datasetIndex: number) => {
+    if (!account) {
+      message.error('No connected wallet account.');
+      return;
+    }
+
+    const transaction: InputTransactionData = {
+      data: {
+        function: `${moduleAddress}::TrusTrain::delete_dataset`,
+        functionArguments: [datasetIndex.toString()],
+      },
+    };
+
+    setTransactionInProgress(true);
+    try {
+      const response = await signAndSubmitTransaction(transaction);
+      await aptos.waitForTransaction({ transactionHash: response.hash });
+      message.success('Dataset deleted successfully.');
+      fetchDatasets(); // Refresh the datasets after deletion
+    } catch (error: any) {
+      console.error('Error deleting dataset:', error);
+      message.error('Failed to delete dataset.');
+    } finally {
+      setTransactionInProgress(false);
+    }
+  };
+
   return (
     <div className="dataset-marketplace">
       <Card title="Shared Datasets" bordered={false} loading={loading}>
@@ -153,13 +181,26 @@ const DatasetMarketplace: React.FC = () => {
                       <Descriptions.Item label="Price">{dataset.price} Tokens</Descriptions.Item>
                     )}
                   </Descriptions>
-                  <Button
-                    type="primary"
-                    onClick={() => handleAccess(dataset, index)}
-                    disabled={transactionInProgress}
-                  >
-                    {dataset.free ? 'Access Dataset' : 'Pay & Access'}
-                  </Button>
+                  <div style={{ display: 'flex', justifyContent: 'space-between' }}>
+                    <Button
+                      type="primary"
+                      onClick={() => handleAccess(dataset, index)}
+                      disabled={transactionInProgress}
+                    >
+                      {dataset.free ? 'Access Dataset' : 'Pay & Access'}
+                    </Button>
+                    {dataset.provider_address === account?.address && (
+                      <Button
+                      type="primary"
+                      danger
+                      onClick={() => handleDeleteDataset(index)}
+                      disabled={transactionInProgress}
+                      icon={<DeleteOutlined />}
+                    />
+                    
+                      
+                    )}
+                  </div>
                 </Card>
               </List.Item>
             )}
