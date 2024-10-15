@@ -2,7 +2,7 @@
 # TrusTrain: Decentralized AI Model Training Platform
 ## Description
 TrusTrain is a decentralized platform that allows AI model trainers to collaborate with resource providers. Trainers can upload their models and datasets and providers will train the models and return the weights in exchange for FLC tokens.
-## Folders Description
+### Folders Description
 
 1. **TrusTrain**:
    - This folder contains the core files responsible for integrating with the Aptos blockchain. It includes smart contract implementations and functions that allow trainers and resource providers to interact in a decentralized manner, securely exchanging models, datasets, and training weights. The blockchain logic ensures transparency and guarantees the correct flow of FLC token payments between trainers and providers.
