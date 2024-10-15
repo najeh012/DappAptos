@@ -6,8 +6,8 @@ TrusTrain is a decentralized platform that allows AI model trainers to collabora
 - [Installation](#installation)
 - [Usage](#usage)
 - [Features](#features)
-- [Contributing](#contributing)
-- [License](#license)
+- [Demo](#demp)
+- [Acknowledgment](#acknowledgment)
 
 ## Installation
 ### Prerequisites
@@ -32,6 +32,23 @@ To start the application:
     ```bash
      npm start
 ## Features
-- Decentralized AI model training
-- Federated learning with resource providers
-- Secure model weight submission and payment
+Decentralized AI Training: Trainers upload models, and resource providers perform the training using allocated hardware.
+Federated Learning: The platform supports federated learning, allowing models to be trained across multiple devices without data sharing.
+Secure Payments: Trainers pay resource providers with FLC tokens for training services.
+Blockchain Integration (Aptos Blockchain): Ensures transparency, immutability, and trust using blockchain technology.
+## Demo 
+
+## Acknowledgment
+   We would like to thank the following projects and communities for their support:
+
+[Aptos Labs](https://aptoslabs.com/) for providing the blockchain SDK
+[Ant Design](https://ant.design/) for UI components
+[IPFS](https://ipfs.tech/) for decentralized file storage
+### Explanation of the Sections:
+1. **Title and Description:** The project title and a brief description of what the TrusTrain platform does.
+2. **Table of Contents:** Helps users navigate to different parts of the README.
+3. **Installation:** Step-by-step instructions to clone the project, install dependencies, and run the app.
+4. **Usage:** Shows examples of how to interact with the platform, both from the command line and programmatically.
+5. **Features:** Highlights the key features of your project.
+6. **Demo:** A demo section to describe how to run a demo of the project.
+7. **Acknowledgements:** Credits for any resources, libraries, or inspiration used in the project.
