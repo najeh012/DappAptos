@@ -12,6 +12,9 @@ TrusTrain is a decentralized platform that allows AI model trainers to collabora
 ## Installation
 1. Clone the repository:
    ```bash
-   git clone https://github.com/najeh012/DappAptos.git
+   git clone https://github.com/najeh012/TrusTrain-DApp.git
 
-
+2. Install dependencies:
+   ```bash
+    npm install
+   
