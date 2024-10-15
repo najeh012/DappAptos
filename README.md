@@ -17,4 +17,7 @@ TrusTrain is a decentralized platform that allows AI model trainers to collabora
 2. Install dependencies:
    ```bash
     npm install
-   
+## Usage
+To start the application:
+```bash
+npm start
