@@ -7,7 +7,7 @@ TrusTrain is a decentralized platform that allows AI model trainers to collabora
 - [Usage](#usage)
 - [Features](#features)
 - [Demo](#demp)
-- [Acknowledgment](#acknowledgment)
+- [Acknowledgements](#acknowledgements)
 
 ## Installation
 ### Prerequisites
@@ -38,17 +38,19 @@ Secure Payments: Trainers pay resource providers with FLC tokens for training se
 Blockchain Integration (Aptos Blockchain): Ensures transparency, immutability, and trust using blockchain technology.
 ## Demo 
 
-## Acknowledgment
-   We would like to thank the following projects and communities for their support:
+## Acknowledgements
+We would like to thank the following projects, communities, and individuals for their support:
 
-[Aptos Labs](https://aptoslabs.com/) for providing the blockchain SDK
-[Ant Design](https://ant.design/) for UI components
-[IPFS](https://ipfs.tech/) for decentralized file storage
+- [Aptos Labs](https://aptoslabs.com/) for providing the blockchain SDK and contributing to the development of the Aptos platform.
+- The **Aptos engineers** for their continued effort in improving the Aptos ecosystem.
+- The [Aptos Documentation](https://aptos.dev/) for providing comprehensive and helpful resources to developers.
+- [Ant Design](https://ant.design/) for UI components that enhanced the user interface.
+- [IPFS](https://ipfs.tech/) for decentralized file storage solutions.
 ### Explanation of the Sections:
 1. **Title and Description:** The project title and a brief description of what the TrusTrain platform does.
 2. **Table of Contents:** Helps users navigate to different parts of the README.
 3. **Installation:** Step-by-step instructions to clone the project, install dependencies, and run the app.
 4. **Usage:** Shows examples of how to interact with the platform, both from the command line and programmatically.
-5. **Features:** Highlights the key features of your project.
+5. **Features:** Highlights the key features of the TrusTrain.
 6. **Demo:** A demo section to describe how to run a demo of the project.
 7. **Acknowledgements:** Credits for any resources, libraries, or inspiration used in the project.
